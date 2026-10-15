@@ -91,7 +91,7 @@ export const PROJECTS = [
     demoUrl: '#',
     repoUrl: 'https://github.com/farhana-farid',
     featured: true,
-    image: '/project1.svg',
+    image: 'project1.svg',
   },
   {
     title: 'DevPulse - Developer Productivity Hub',
@@ -100,7 +100,7 @@ export const PROJECTS = [
     tags: ['Flask', 'Vanilla JS', 'SQLite', 'Tailwind CSS'],
     demoUrl: '#',
     repoUrl: 'https://github.com/farhana-farid',
-    image: '/project2.svg',
+    image: 'project2.svg',
   },
   {
     title: 'ArtisanUI - Clean Modern UI Components',
@@ -109,7 +109,7 @@ export const PROJECTS = [
     tags: ['HTML5', 'Tailwind CSS', 'Vanilla JS', 'SVG'],
     demoUrl: '#',
     repoUrl: 'https://github.com/farhana-farid',
-    image: '/project3.svg',
+    image: 'project3.svg',
   },
   {
     title: 'SmartExpense - AI Financial Categorizer',
@@ -118,7 +118,7 @@ export const PROJECTS = [
     tags: ['Python', 'Flask', 'AI Prompting', 'Tailwind CSS'],
     demoUrl: '#',
     repoUrl: 'https://github.com/farhana-farid',
-    image: '/project4.svg',
+    image: 'project4.svg',
   },
   {
     title: 'NexusChat - Multi-Agent AI Interface',
@@ -127,7 +127,7 @@ export const PROJECTS = [
     tags: ['Python', 'Flask', 'Vanilla JS', 'REST API'],
     demoUrl: '#',
     repoUrl: 'https://github.com/farhana-farid',
-    image: '/project5.svg',
+    image: 'project5.svg',
   },
   {
     title: 'PortfolioCraft - High-Speed Portfolio Template',
@@ -136,7 +136,7 @@ export const PROJECTS = [
     tags: ['HTML5', 'Tailwind CSS', 'Vanilla JS', 'SEO'],
     demoUrl: '#',
     repoUrl: 'https://github.com/farhana-farid',
-    image: '/project6.svg',
+    image: 'project6.svg',
   },
 ]
 

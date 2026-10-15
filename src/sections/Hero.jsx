@@ -1,9 +1,8 @@
-import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Mail, MapPin } from 'lucide-react'
 import { STATS, MARQUEE } from '../data'
+import InteractiveMascot from '../components/InteractiveMascot'
 import '../mascot.css'
-import { initMascot, cleanupMascot } from '../mascotMotion'
 
 const container = {
   hidden: { opacity: 0 },
@@ -20,11 +19,6 @@ function scrollTo(id) {
 }
 
 export default function Hero() {
-  useEffect(() => {
-    initMascot()
-    return () => cleanupMascot()
-  }, [])
-
   return (
     <section
       id="home"
@@ -72,7 +66,7 @@ export default function Hero() {
 
             <motion.h1
               variants={item}
-              className="mt-7 text-[2.6rem] font-black uppercase leading-[0.98] tracking-tight sm:text-6xl lg:text-7xl xl:text-[5.4rem]"
+              className="mt-7 text-[2.6rem] font-black uppercase leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl xl:text-[5.4rem]"
             >
               Hello, I'm{' '}
               <span className="mt-2 block">
@@ -136,34 +130,17 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
             className="relative mx-auto w-full max-w-[24rem] lg:max-w-none"
           >
-            <div id="mascot-interactive-container" className="mascot-3d-perspective relative w-full max-w-[420px] select-none cursor-pointer">
-              <div className="absolute -inset-4 bg-gradient-to-r from-violet-600 via-purple-500 to-blue-500 rounded-[2.5rem] opacity-25 blur-xl -z-10 animate-pulse" />
-              <div id="mascot-3d-card" className="mascot-3d-card relative bg-white rounded-3xl p-6 md:p-8 border-2 border-[#EDE9FE] card-soft-shadow">
-                <div id="mascot-glare" className="mascot-layer-glare" />
-                <div id="mascot-speech-bubble" className="mascot-layer-speech speech-bubble-pop mb-4 relative z-30 bg-gradient-to-r from-violet-900 to-violet-700 text-white p-3.5 rounded-2xl shadow-lg border border-violet-400/30 flex items-center space-x-2.5">
-                  <span className="text-xl flex-shrink-0 animate-bounce">💬</span>
-                  <div className="flex-1">
-                    <p id="mascot-speech-text" className="text-xs font-bold leading-tight tracking-wide transition-all duration-200">
-                      Hi! I'm Sparky, Farhana's 3D AI Sidekick! 🦊 Click me!
-                    </p>
-                  </div>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/20 text-white font-mono uppercase font-bold flex-shrink-0">3D Interactive</span>
-                  <div className="absolute -bottom-2 left-10 w-4 h-4 bg-violet-800 rotate-45 transform" />
-                </div>
-                <div className="relative bg-gradient-to-b from-[#FAF9FF] via-[#F5F3FF] to-[#EDE9FE] rounded-2xl p-6 overflow-hidden border border-[#EDE9FE] flex items-center justify-center min-h-[300px]">
+            <div className="w-full max-w-[420px] select-none">
+              <div className="relative bg-white rounded-3xl p-6 md:p-8 border-2 border-[#EDE9FE] card-soft-shadow">
+                <div className="relative bg-gradient-to-b from-[#FAF9FF] via-[#F5F3FF] to-[#EDE9FE] rounded-2xl p-4 overflow-hidden border border-[#EDE9FE] flex items-center justify-center">
                   <div className="absolute w-56 h-56 rounded-full bg-violet-300/30 blur-2xl pointer-events-none" />
-                  <div className="absolute w-44 h-44 rounded-full border-2 border-dashed border-violet-300/50 animate-spin-slow pointer-events-none" />
-                  <div className="mascot-layer-mascot relative z-20 flex justify-center items-center">
-                    <img id="mascot-interactive-img" src="/mascot.png" alt="Farhana Farid 3D AI Mascot" className="mascot-idle max-h-72 w-auto object-contain drop-shadow-[0_20px_20px_rgba(59,130,246,0.3)] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer" />
-                  </div>
-                  <div className="mascot-layer-badge absolute top-4 right-4 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-[#EDE9FE] shadow-md flex items-center space-x-1.5 animate-float-slow z-30">
-                    <span className="text-sm">🤖</span>
-                    <span className="text-xs font-bold text-[#0F172A]">AI Co-Pilot</span>
-                  </div>
-                  <div className="mascot-layer-badge absolute bottom-4 left-4 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-[#EDE9FE] shadow-md flex items-center space-x-1.5 animate-float-reverse z-30">
-                    <span className="text-sm">👍</span>
-                    <span className="text-xs font-bold text-[#0F172A]">100% Dedicated</span>
-                  </div>
+                  <InteractiveMascot
+                    width={200}
+                    mode="svg-rig"
+                    maxEyeOffset={8}
+                    maxBodyTilt={12}
+                    onMascotClick={() => console.log('Mascot clicked!')}
+                  />
                 </div>
                 <div className="mt-5 pt-4 border-t border-[#EDE9FE] flex items-center justify-between">
                   <div>
@@ -171,12 +148,8 @@ export default function Hero() {
                       <span>Sparky</span>
                       <span className="text-xs font-normal text-slate-500">• Farhana's AI Mascot</span>
                     </h3>
-                    <p className="text-xs font-semibold text-violet-600">3D Interactive • Move mouse to tilt</p>
+                    <p className="text-xs font-semibold text-violet-600">Move your cursor — click to make Sparky wink 👋</p>
                   </div>
-                  <button type="button" id="mascot-poke-btn" className="flex items-center space-x-1 text-xs font-bold px-3 py-1.5 bg-violet-100 hover:bg-violet-600 hover:text-white text-violet-700 rounded-full border border-violet-200 transition-all duration-200 shadow-sm active:scale-95">
-                    <span>Poke me!</span>
-                    <span>✨</span>
-                  </button>
                 </div>
               </div>
             </div>
