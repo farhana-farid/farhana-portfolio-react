@@ -1,3 +1,4 @@
+import { useCallback, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Mail, MapPin } from 'lucide-react'
 import { STATS, MARQUEE } from '../data'
@@ -14,12 +15,36 @@ const item = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
 }
 
+// Sparky's rotating one-liners. The first is the intro shown on load.
+const SPARKY_LINES = [
+  "Hi! I'm Sparky, Farhana's AI sidekick! 🦊 Tap me for a quick intro.",
+  'Farhana builds AI-powered web apps with Python, Flask & modern JavaScript. 🚀',
+  'She designs clean, responsive interfaces with Tailwind CSS. 🎨',
+  'Her backends are fast, scalable and well structured. ⚡',
+  'Need custom LLM workflow integrations? Let’s talk! 🤖',
+  'Click the projects below to see her work. 👇',
+]
+
 function scrollTo(id) {
   const el = document.getElementById(id)
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
 export default function Hero() {
+  const [lineIndex, setLineIndex] = useState(0)
+  const [fading, setFading] = useState(false)
+  const swapTimer = useRef(null)
+
+  // Click Sparky (or the bubble) to advance to the next line
+  const cycleSpeech = useCallback(() => {
+    setFading(true)
+    window.clearTimeout(swapTimer.current)
+    swapTimer.current = window.setTimeout(() => {
+      setLineIndex((i) => (i + 1) % SPARKY_LINES.length)
+      setFading(false)
+    }, 180)
+  }, [])
+
   return (
     <section
       id="home"
@@ -133,6 +158,27 @@ export default function Hero() {
           >
             <TiltCard className="mx-auto w-full max-w-[420px] select-none" maxTilt={14} glare>
               <div className="relative bg-white rounded-3xl p-6 md:p-8 border-2 border-[#EDE9FE] card-soft-shadow">
+                <div
+                  id="mascot-speech-bubble"
+                  className="speech-bubble-pop relative z-30 mb-4 flex cursor-pointer items-start gap-2.5 rounded-2xl border border-violet-400/30 bg-gradient-to-r from-violet-900 to-violet-700 p-3.5 text-white shadow-lg"
+                  onClick={cycleSpeech}
+                >
+                  <span className="flex-shrink-0 text-lg leading-tight">💬</span>
+                  <div className="min-w-0 flex-1">
+                    <p
+                      id="mascot-speech-text"
+                      className="text-[11px] font-bold leading-snug tracking-wide transition-all duration-200 sm:text-xs"
+                      style={{
+                        opacity: fading ? 0 : 1,
+                        transform: fading ? 'translateY(4px)' : 'translateY(0)',
+                      }}
+                    >
+                      {SPARKY_LINES[lineIndex]}
+                    </p>
+                  </div>
+                  <div className="absolute -bottom-2 left-10 h-4 w-4 rotate-45 bg-violet-800" />
+                </div>
+
                 <div className="relative bg-gradient-to-b from-[#FAF9FF] via-[#F5F3FF] to-[#EDE9FE] rounded-2xl p-4 overflow-hidden border border-[#EDE9FE] flex items-center justify-center">
                   <div className="absolute w-56 h-56 rounded-full bg-violet-300/30 blur-2xl pointer-events-none" />
                   <InteractiveMascot
@@ -140,7 +186,7 @@ export default function Hero() {
                     mode="svg-rig"
                     maxEyeOffset={8}
                     maxBodyTilt={12}
-                    onMascotClick={() => console.log('Mascot clicked!')}
+                    onMascotClick={cycleSpeech}
                   />
                 </div>
                 <div className="mt-5 pt-4 border-t border-[#EDE9FE] flex items-center justify-between">
@@ -149,7 +195,7 @@ export default function Hero() {
                       <span>Sparky</span>
                       <span className="text-xs font-normal text-slate-500">• Farhana's AI Mascot</span>
                     </h3>
-                    <p className="text-xs font-semibold text-violet-600">Move your cursor — click to make Sparky wink 👋</p>
+                    <p className="text-xs font-semibold text-violet-600">Click Sparky for a new message 👋</p>
                   </div>
                 </div>
               </div>
