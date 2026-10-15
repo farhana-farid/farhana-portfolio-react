@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Mail, MapPin } from 'lucide-react'
 import { STATS, MARQUEE } from '../data'
 import InteractiveMascot from '../components/InteractiveMascot'
+import TiltCard from '../components/TiltCard'
 import '../mascot.css'
 
 const container = {
@@ -130,7 +131,7 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
             className="relative mx-auto w-full max-w-[24rem] lg:max-w-none"
           >
-            <div className="w-full max-w-[420px] select-none">
+            <TiltCard className="mx-auto w-full max-w-[420px] select-none" maxTilt={14} glare>
               <div className="relative bg-white rounded-3xl p-6 md:p-8 border-2 border-[#EDE9FE] card-soft-shadow">
                 <div className="relative bg-gradient-to-b from-[#FAF9FF] via-[#F5F3FF] to-[#EDE9FE] rounded-2xl p-4 overflow-hidden border border-[#EDE9FE] flex items-center justify-center">
                   <div className="absolute w-56 h-56 rounded-full bg-violet-300/30 blur-2xl pointer-events-none" />
@@ -152,7 +153,7 @@ export default function Hero() {
                   </div>
                 </div>
               </div>
-            </div>
+            </TiltCard>
           </motion.div>
         </div>
 
