@@ -31,6 +31,8 @@ export interface Collection {
   note: string
   /** every carousel entry needs only a src and alt to render */
   photos: { src: string; alt: string; key: string }[]
+  /** frame shape — the originals are widescreen, the story stills are portrait */
+  shape?: 'landscape' | 'portrait'
 }
 
 /* ------------------------------------------------------------------ */
@@ -125,12 +127,14 @@ export const COLLECTIONS: Collection[] = [
     title: 'The Palace Letters — Arrival',
     note: 'A woman returns to an abandoned palace, finds a locked door, and uncovers a blue letter that should not exist.',
     photos: storyGroup(STORY_GROUPS[0] ?? []),
+    shape: 'portrait',
   },
   {
     number: '07',
     title: 'The Palace Letters — The Turn',
     note: 'The story darkens — a letter half-read, a figure at the end of the corridor, and a hand reaching out of the gloom.',
     photos: storyGroup(STORY_GROUPS[1] ?? []),
+    shape: 'portrait',
   },
 ]
 

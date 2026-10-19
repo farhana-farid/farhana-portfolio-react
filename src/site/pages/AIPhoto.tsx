@@ -12,16 +12,34 @@ interface GallerySlide extends CarouselSlide {
   number: string
 }
 
+/**
+ * Collections are not all the same shape. The first five are widescreen
+ * landscapes (1376x768) and the two Palace Letters collections are tall
+ * portraits (670x1200). A single fixed frame would letterbox one group or
+ * crop the other, so the frame is chosen to match the images it holds and
+ * `object-contain` guarantees nothing is ever cut off.
+ */
+type GalleryShape = 'landscape' | 'portrait'
+
+const FRAME: Record<GalleryShape, string> = {
+  landscape: 'aspect-[1376/768]',
+  // the story stills are 670x1200 (ratio 0.56) — matching the frame to the real
+  // picture shape means `contain` fills it exactly, with no side bars
+  portrait: 'aspect-[670/1200] max-w-[28rem]',
+}
+
 function GalleryCarousel({
   number,
   title,
   note,
   photos,
+  shape = 'landscape',
 }: {
   number: string
   title: string
   note: string
   photos: GallerySlide[]
+  shape?: GalleryShape
 }) {
   return (
     <section
@@ -77,7 +95,7 @@ function GalleryCarousel({
           <Carousel
             slides={photos}
             label={`${title} — collection ${number}`}
-            viewportClassName="aspect-[1376/768] rounded-[3px] border border-champagne/50"
+            viewportClassName={`${FRAME[shape]} mx-auto w-full rounded-[3px] border border-champagne/50 bg-ivory`}
             renderSlide={({ slide, index, active }) => (
               <figure className="relative h-full w-full">
                 <SmartImage
@@ -86,7 +104,7 @@ function GalleryCarousel({
                   loading={active || index <= 1 ? 'eager' : 'lazy'}
                   fetchPriority={active ? 'high' : 'auto'}
                   wrapperClassName="h-full w-full"
-                  className="object-cover"
+                  className="object-contain"
                 />
                 <span
                   aria-hidden="true"
@@ -160,6 +178,7 @@ export default function AIPhoto() {
             title={collection.title}
             note={collection.note}
             photos={collection.photos}
+            shape={collection.shape ?? 'landscape'}
           />
         ))}
 
