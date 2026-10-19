@@ -93,37 +93,48 @@ function Hero() {
         </div>
 
         {/* ---------------- cinematic plate ---------------- */}
-        <Reveal delay={200} className="relative">
-          {/* offset champagne hairline */}
+        <Reveal delay={200} className="relative mx-auto w-full max-w-xl lg:max-w-none">
+          {/* offset champagne hairline, gently floating */}
           <div
             aria-hidden="true"
-            className="absolute -right-3 -top-3 hidden h-full w-full rounded-[3px] border border-champagne/60 sm:block lg:-right-5 lg:-top-5"
+            className="hero-accent-frame absolute -right-3 -top-3 hidden h-full w-full rounded-[3px] border border-champagne/60 sm:block lg:-right-5 lg:-top-5"
           />
-          {/* soft glow behind the picture */}
+          {/* drifting light haze behind the picture */}
           <div
             aria-hidden="true"
-            className="absolute -bottom-10 left-1/2 h-56 w-[85%] -translate-x-1/2 rounded-full bg-peach/70 blur-3xl"
+            className="hero-haze pointer-events-none absolute -bottom-12 left-1/2 h-64 w-[88%] -translate-x-1/2 rounded-full bg-peach/75 blur-3xl"
           />
 
-          <figure className="relative">
+          <figure className="hero-enter relative">
             <div
-              className="plate rounded-[3px]"
+              className="plate hero-media rounded-[3px]"
               style={{ boxShadow: 'var(--shadow-glow)' }}
             >
               <SmartImage
                 src={heroImage}
-                alt="Cinematic portrait of a woman in black beneath a glowing golden moon, the hero artwork of the Farhana Farid portfolio"
+                alt="Cinematic artwork of a woman in black beneath a glowing golden moon — the hero piece of the Farhana Farid portfolio"
                 loading="eager"
                 fetchPriority="high"
-                wrapperClassName="aspect-[318/184] w-full"
+                wrapperClassName="aspect-[16/9] w-full"
                 className="object-cover object-center"
               />
+
+              {/* slow light sweep, runs once on load */}
+              <span
+                aria-hidden="true"
+                className="hero-sheen pointer-events-none absolute inset-y-0 -left-1/3 w-1/3"
+                style={{
+                  background:
+                    'linear-gradient(90deg, rgba(255,252,250,0) 0%, rgba(255,252,250,0.34) 50%, rgba(255,252,250,0) 100%)',
+                }}
+              />
+
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0"
                 style={{
                   background:
-                    'linear-gradient(200deg, rgba(255,252,250,0.10) 0%, rgba(48,39,43,0) 42%, rgba(48,39,43,0.34) 100%)',
+                    'linear-gradient(200deg, rgba(255,252,250,0.10) 0%, rgba(48,39,43,0) 42%, rgba(48,39,43,0.30) 100%)',
                 }}
               />
               <div
@@ -136,7 +147,7 @@ function Hero() {
               <span>Cinematic study</span>
               <span className="flex items-center gap-2 text-rose-deep">
                 <Sparkles className="h-3 w-3" strokeWidth={1.5} aria-hidden="true" />
-                AI-assisted imagery
+                AI-generated artwork
               </span>
             </figcaption>
           </figure>
