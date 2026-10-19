@@ -407,8 +407,7 @@
   overflow: visible;
 }
 
-.hero-artwork-wrap > img,
-img.hero-artwork {
+.hero-artwork-wrap > img {
   height: 100%;
   width: 100%;
   object-fit: contain;
@@ -473,7 +472,8 @@ img.hero-artwork {
   }
 
   /* hero motion is decorative — remove it entirely */
-  .hero-artwork,
+  .hero-artwork-wrap,
+  .hero-artwork-wrap > img,
   .hero-backdrop,
   .hero-haze,
   .hero-accent-frame,
@@ -482,7 +482,7 @@ img.hero-artwork {
     animation: none !important;
   }
 
-  .hero-artwork,
+  .hero-artwork-wrap > img,
   .hero-backdrop {
     transform: none !important;
   }
