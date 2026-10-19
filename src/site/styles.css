@@ -364,15 +364,64 @@
   }
 }
 
+/* ------------------------------------------------------------------
+   Full-bleed hero: the artwork fills the section edge to edge and the
+   copy sits on top of it.
+
+   The image must never be cropped, so `object-fit: contain` is used at
+   every size — the whole frame is always visible. To stop the contain
+   letterboxing from showing as empty bands, the band is filled with the
+   same artwork blurred and scaled up (see .hero-backdrop), which reads
+   as a soft extension of the picture rather than a hard edge.
+------------------------------------------------------------------ */
+
 .hero-media {
+  position: absolute;
+  inset: 0;
   overflow: hidden;
-  /* keeps the scaled image from painting outside the plate */
   isolation: isolate;
 }
 
-.hero-media img {
+/* blurred filler so `contain` never leaves visible empty bands */
+.hero-backdrop {
+  position: absolute;
+  inset: -8%;
+  width: 116%;
+  height: 116%;
+  object-fit: cover;
+  filter: blur(38px) saturate(1.05) brightness(0.62);
+  transform: scale(1.06);
+  animation: hero-push-in 26s cubic-bezier(0.33, 0, 0.67, 1) 0.4s both;
+  transform-origin: 50% 50%;
+}
+
+/* the real picture: whole frame visible, never cropped.
+   SmartImage renders a wrapper div, so the geometry goes on that wrapper
+   and `object-fit: contain` goes on the <img> inside it. */
+.hero-artwork-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  overflow: visible;
+}
+
+.hero-artwork-wrap > img,
+img.hero-artwork {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  object-position: center;
   animation: hero-push-in 22s cubic-bezier(0.33, 0, 0.67, 1) 0.5s both;
-  transform-origin: 50% 45%;
+  transform-origin: 50% 48%;
+}
+
+/* scrim: darkens the lower-left so the copy stays readable over the art */
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
 
 .hero-haze {
@@ -424,7 +473,8 @@
   }
 
   /* hero motion is decorative — remove it entirely */
-  .hero-media img,
+  .hero-artwork,
+  .hero-backdrop,
   .hero-haze,
   .hero-accent-frame,
   .hero-enter,
@@ -432,7 +482,8 @@
     animation: none !important;
   }
 
-  .hero-media img {
+  .hero-artwork,
+  .hero-backdrop {
     transform: none !important;
   }
 

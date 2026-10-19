@@ -17,58 +17,101 @@ function Hero() {
   const meta = PAGE_META['/']
 
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative isolate flex min-h-[42rem] items-center overflow-hidden lg:min-h-[92vh]">
       <PageMeta title={meta.title} description={meta.description} />
 
-      {/* layered warm washes */}
+      {/* ---------------- full-bleed artwork ----------------
+          A blurred copy fills the frame, then the real picture is drawn
+          on top with `object-fit: contain` so the whole artwork is always
+          visible at every screen size — nothing is ever cropped. */}
+      <div className="hero-media" aria-hidden="true">
+        <img src={heroImage} alt="" className="hero-backdrop" draggable={false} />
+      </div>
+
+      <div className="hero-media">
+        <SmartImage
+          src={heroImage}
+          alt="Cinematic artwork of a woman in black beneath a glowing golden moon — the hero piece of the Farhana Farid portfolio"
+          loading="eager"
+          fetchPriority="high"
+          wrapperClassName="hero-artwork-wrap"
+        />
+      </div>
+
+      {/* scrim so the copy reads clearly over the artwork.
+          Strengthened where the text column sits (left half) so no bright
+          part of the artwork can sit behind a letter. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-[46rem]"
+        className="hero-scrim"
         style={{
           background:
-            'linear-gradient(180deg, #FFF8F3 0%, rgba(243,197,203,0.38) 52%, rgba(255,252,250,0) 100%)',
+            'linear-gradient(100deg, rgba(26,18,21,0.93) 0%, rgba(28,20,23,0.90) 26%, rgba(30,22,25,0.80) 46%, rgba(36,26,30,0.44) 64%, rgba(48,39,43,0.10) 82%, rgba(48,39,43,0) 100%)',
         }}
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-40 top-24 h-[30rem] w-[30rem] rounded-full bg-peach/50 blur-3xl"
+        className="hero-scrim"
+        style={{
+          background:
+            'linear-gradient(0deg, rgba(24,17,19,0.72) 0%, rgba(26,18,21,0.40) 30%, rgba(30,22,25,0.12) 55%, rgba(48,39,43,0) 75%)',
+        }}
       />
+      {/* flat wash under the text zone only, on narrow screens where the
+          gradient runs out of room before the text does */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-32 top-72 h-[26rem] w-[26rem] rounded-full bg-blush/40 blur-3xl"
+        className="hero-scrim lg:hidden"
+        style={{ background: 'rgba(26,18,21,0.52)' }}
       />
 
-      <div className="relative mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 px-5 pb-16 pt-32 sm:px-8 sm:pt-36 lg:min-h-[86vh] lg:grid-cols-[1.02fr_0.98fr] lg:gap-16 lg:pb-24 lg:pt-40">
-        {/* ---------------- copy ---------------- */}
-        <div>
+      {/* drifting warm haze, decorative */}
+      <div
+        aria-hidden="true"
+        className="hero-haze pointer-events-none absolute -bottom-16 left-[8%] h-72 w-[46%] rounded-full bg-peach/25 blur-3xl"
+      />
+
+      {/* slow light sweep across the full frame, runs once */}
+      <span
+        aria-hidden="true"
+        className="hero-sheen pointer-events-none absolute inset-y-0 -left-1/3 w-1/3"
+        style={{
+          background:
+            'linear-gradient(90deg, rgba(255,252,250,0) 0%, rgba(255,252,250,0.16) 50%, rgba(255,252,250,0) 100%)',
+        }}
+      />
+
+      {/* ---------------- copy, over the artwork ---------------- */}
+      <div className="relative mx-auto w-full max-w-7xl px-5 py-24 sm:px-8 lg:py-28">
+        <div className="max-w-2xl">
           <Reveal>
-            <p className="eyebrow">AI Creator &amp; Website Designer</p>
+            <p className="eyebrow !text-champagne">AI Creator &amp; Website Designer</p>
           </Reveal>
 
           <Reveal delay={90}>
-            <p className="mt-7 font-display text-[clamp(1.4rem,3vw,1.9rem)] italic leading-none text-rose-gold">
+            <p className="mt-7 font-display text-[clamp(1.4rem,3vw,1.9rem)] italic leading-none text-peach">
               Hello, I&apos;m
             </p>
           </Reveal>
 
           <Reveal delay={140}>
-            <h1 className="mt-2 font-display text-[clamp(2.9rem,8.5vw,5.4rem)] font-medium leading-[0.95] tracking-[-0.02em] text-ink">
+            <h1 className="mt-2 font-display text-[clamp(2.9rem,8.5vw,5.4rem)] font-medium leading-[0.95] tracking-[-0.02em] text-paper">
               Farhana
-              <span className="block text-rose-gold">Farid</span>
+              <span className="block text-champagne">Farid</span>
             </h1>
           </Reveal>
 
           <Reveal delay={220}>
             <div className="mt-7 flex items-center gap-4">
-              <span className="h-px w-16 bg-champagne" aria-hidden="true" />
-              <p className="text-[0.66rem] font-medium uppercase tracking-[0.3em] text-muted">
+              <span className="h-px w-16 bg-champagne/80" aria-hidden="true" />
+              <p className="text-[0.66rem] font-medium uppercase tracking-[0.3em] text-paper/85">
                 Designer · Developer · AI Enthusiast
               </p>
             </div>
           </Reveal>
 
           <Reveal delay={300}>
-            <p className="mt-7 max-w-xl text-[1.06rem] leading-[1.75] text-muted">
+            <p className="mt-7 max-w-xl text-[1.06rem] leading-[1.75] text-paper/90">
               Turning imagination into digital experiences — through thoughtful websites, AI-powered
               imagery and cinematic storytelling. Every frame, layout and interaction is a chance to
               make something beautiful.
@@ -81,87 +124,24 @@ function Hero() {
                 View My Work
                 <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
               </Link>
-              <Link to="/about" className="btn btn-ghost">
+              <Link to="/about" className="btn btn-ghost !border-paper/45 !text-paper">
                 About Me
               </Link>
             </div>
           </Reveal>
 
           <Reveal delay={460}>
-            <p className="mt-9 font-script text-3xl leading-none text-rose-gold">Farhana Farid</p>
+            <p className="mt-9 font-script text-3xl leading-none text-champagne">Farhana Farid</p>
           </Reveal>
         </div>
 
-        {/* ---------------- cinematic plate ---------------- */}
-        <Reveal delay={200} className="relative mx-auto w-full max-w-xl lg:max-w-none">
-          {/* offset champagne hairline, gently floating */}
-          <div
-            aria-hidden="true"
-            className="hero-accent-frame absolute -right-3 -top-3 hidden h-full w-full rounded-[3px] border border-champagne/60 sm:block lg:-right-5 lg:-top-5"
-          />
-          {/* drifting light haze behind the picture */}
-          <div
-            aria-hidden="true"
-            className="hero-haze pointer-events-none absolute -bottom-12 left-1/2 h-64 w-[88%] -translate-x-1/2 rounded-full bg-peach/75 blur-3xl"
-          />
-
-          <figure className="hero-enter relative">
-            <div
-              className="plate hero-media rounded-[3px]"
-              style={{ boxShadow: 'var(--shadow-glow)' }}
-            >
-              <SmartImage
-                src={heroImage}
-                alt="Cinematic artwork of a woman in black beneath a glowing golden moon — the hero piece of the Farhana Farid portfolio"
-                loading="eager"
-                fetchPriority="high"
-                wrapperClassName="aspect-[16/9] w-full"
-                className="object-cover object-center"
-              />
-
-              {/* slow light sweep, runs once on load */}
-              <span
-                aria-hidden="true"
-                className="hero-sheen pointer-events-none absolute inset-y-0 -left-1/3 w-1/3"
-                style={{
-                  background:
-                    'linear-gradient(90deg, rgba(255,252,250,0) 0%, rgba(255,252,250,0.34) 50%, rgba(255,252,250,0) 100%)',
-                }}
-              />
-
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0"
-                style={{
-                  background:
-                    'linear-gradient(200deg, rgba(255,252,250,0.10) 0%, rgba(48,39,43,0) 42%, rgba(48,39,43,0.30) 100%)',
-                }}
-              />
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-3 rounded-[2px] border border-champagne/40"
-              />
-            </div>
-
-            <figcaption className="mt-4 flex items-center justify-between gap-4 text-[0.6rem] font-medium uppercase tracking-[0.28em] text-muted">
-              <span>Cinematic study</span>
-              <span className="flex items-center gap-2 text-rose-deep">
-                <Sparkles className="h-3 w-3" strokeWidth={1.5} aria-hidden="true" />
-                AI-generated artwork
-              </span>
-            </figcaption>
-          </figure>
-        </Reveal>
-      </div>
-
-      {/* ---------------- scroll cue ---------------- */}
-      <div className="relative -mt-10 hidden justify-center pb-10 lg:flex" aria-hidden="true">
-        <span className="flex flex-col items-center gap-3">
-          <span className="text-[0.55rem] font-medium uppercase tracking-[0.4em] text-muted">
-            Scroll
+        {/* caption, bottom-right, over the darker part of the frame */}
+        <figcaption className="mt-16 flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.6rem] font-medium uppercase tracking-[0.28em] text-paper/70 lg:absolute lg:bottom-6 lg:right-8 lg:mt-0">
+          <span className="flex items-center gap-2">
+            <Sparkles className="h-3 w-3" strokeWidth={1.5} aria-hidden="true" />
+            Cinematic study · AI-generated artwork
           </span>
-          <span className="h-12 w-px bg-gradient-to-b from-champagne to-transparent" />
-        </span>
+        </figcaption>
       </div>
     </section>
   )
