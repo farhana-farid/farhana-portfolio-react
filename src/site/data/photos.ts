@@ -1,13 +1,19 @@
 /**
  * Master content model for the AI Photo gallery.
  *
- * All twenty photographs live in `src/assets/slider/` and are discovered with
- * `import.meta.glob`, so adding another image to that folder automatically adds
- * it to both the homepage slider and this gallery — nothing is hard-coded twice.
+ * Two sources feed the gallery:
  *
- * The slug prefix (00 – 19) fixes a stable ordering; the groups below split the
- * twenty photographs into exactly five carousels of four unique images each.
+ *   1. `src/assets/slider/` — the original twenty interface and product
+ *      studies, split into five carousels of four (Collections 01 – 05).
+ *   2. `src/assets/story/`  — "The Palace Letters", ten stills from a single
+ *      connected narrative, shown as Collections 06 – 07.
+ *
+ * Both are discovered with `import.meta.glob`, so adding a file to either
+ * folder extends the gallery without touching this list a second time. The
+ * slug prefixes fix a stable ordering.
  */
+
+import { STORY_GROUPS } from './story'
 
 export interface Photo {
   /** zero-based position across the whole set */
@@ -23,7 +29,8 @@ export interface Collection {
   number: string
   title: string
   note: string
-  photos: Photo[]
+  /** every carousel entry needs only a src and alt to render */
+  photos: { src: string; alt: string; key: string }[]
 }
 
 /* ------------------------------------------------------------------ */
@@ -70,7 +77,12 @@ export const PHOTOS: Photo[] = orderedEntries.map(([path, src], index) => {
   return { index, slug, src, alt: ALTS[key] ?? `AI-generated artwork ${index + 1} by Farhana Farid` }
 })
 
-const byIndex = (...indices: number[]): Photo[] => indices.map((i) => PHOTOS[i])
+const byIndex = (...indices: number[]) =>
+  indices.map((i) => ({ src: PHOTOS[i].src, alt: PHOTOS[i].alt, key: PHOTOS[i].slug }))
+
+/** story stills expose `number`/`slug`; map them onto the shared shape */
+const storyGroup = (chapters: { src: string; alt: string; slug: string }[]) =>
+  chapters.map((c) => ({ src: c.src, alt: c.alt, key: c.slug }))
 
 /**
  * Exactly five carousels, four unique photographs each, never repeated:
@@ -107,9 +119,31 @@ export const COLLECTIONS: Collection[] = [
     note: 'Concepts for presenting a student body of work, skills and career progress.',
     photos: byIndex(16, 17, 18, 19),
   },
+  /* ---- Collections 06 – 07: The Palace Letters, a connected story ---- */
+  {
+    number: '06',
+    title: 'The Palace Letters — Arrival',
+    note: 'A woman returns to an abandoned palace, finds a locked door, and uncovers a blue letter that should not exist.',
+    photos: storyGroup(STORY_GROUPS[0] ?? []),
+  },
+  {
+    number: '07',
+    title: 'The Palace Letters — The Turn',
+    note: 'The story darkens — a letter half-read, a figure at the end of the corridor, and a hand reaching out of the gloom.',
+    photos: storyGroup(STORY_GROUPS[1] ?? []),
+  },
 ]
 
-/* safety net — guarantees the brief's "twenty photographs, five carousels of four" */
+/* safety net — verifies the gallery is still complete and duplicates-free */
 export const PHOTO_COUNT = PHOTOS.length
+export const STORY_COUNT = STORY_GROUPS.flat().length
+export const COLLECTION_COUNT = COLLECTIONS.length
 export const TOTAL_SLOTS = COLLECTIONS.reduce((sum, c) => sum + c.photos.length, 0)
-export const UNIQUE_SLOTS = new Set(COLLECTIONS.flatMap((c) => c.photos.map((p) => p.index))).size
+/** every carousel entry across the whole gallery is unique — no repeats */
+export const UNIQUE_SLOTS = new Set(COLLECTIONS.flatMap((c) => c.photos.map((p) => p.key))).size
+/** true when no image is shown in two different carousels */
+export const NO_REPEATS = UNIQUE_SLOTS === TOTAL_SLOTS
+
+/* the Palace Letters also exists as a film series; expose the counts so the
+   AI Photo page can cross-link to it without importing the story module */
+export const STORY_SERIES_TITLE = 'The Palace Letters'

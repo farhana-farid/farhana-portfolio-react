@@ -4,7 +4,8 @@ import PageMeta from '../components/PageMeta'
 import Reveal from '../components/Reveal'
 import SmartImage from '../components/SmartImage'
 import Carousel, { type CarouselSlide } from '../components/Carousel'
-import { PHOTOS, COLLECTIONS } from '../data/photos'
+import { PHOTOS, COLLECTIONS, TOTAL_SLOTS, COLLECTION_COUNT } from '../data/photos'
+import { STORY_STILLS } from '../data/story'
 import { VIDEOS } from '../data/videos'
 import { PAGE_META, SITE } from '../data/site'
 import heroImage from '../../assets/hero/hero-cinematic.png'
@@ -122,7 +123,7 @@ function Hero() {
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <Link to="/ai-photo" className="btn btn-primary">
                 View My Work
-                <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
+                <ArrowRight className="ico-arrow-right h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
               </Link>
               <Link to="/about" className="btn btn-ghost !border-paper/45 !text-paper">
                 About Me
@@ -138,7 +139,7 @@ function Hero() {
         {/* caption, bottom-right, over the darker part of the frame */}
         <figcaption className="mt-16 flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.6rem] font-medium uppercase tracking-[0.28em] text-paper/70 lg:absolute lg:bottom-6 lg:right-8 lg:mt-0">
           <span className="flex items-center gap-2">
-            <Sparkles className="h-3 w-3" strokeWidth={1.5} aria-hidden="true" />
+            <Sparkles className="icon-twinkle h-3 w-3" strokeWidth={1.5} aria-hidden="true" />
             Cinematic study · AI-generated artwork
           </span>
         </figcaption>
@@ -173,9 +174,8 @@ function FeaturedWork() {
           </Reveal>
           <Reveal delay={160}>
             <p className="text-[1rem] leading-relaxed text-muted lg:pb-2">
-              Twenty AI-generated photographs gathered into five considered collections, plus
-              cinematic video experiments — each one built as a designed experience rather than a
-              simple image dump.
+              AI-generated imagery gathered into considered collections, plus cinematic video
+              experiments — each one built as a designed experience rather than a simple image dump.
             </p>
           </Reveal>
         </div>
@@ -204,11 +204,11 @@ function FeaturedWork() {
                 <div className="flex items-center justify-between gap-4">
                   <p className="eyebrow">AI Photo</p>
                   <p className="text-[0.6rem] font-medium uppercase tracking-[0.24em] text-muted">
-                    20 images
+                    {TOTAL_SLOTS} images
                   </p>
                 </div>
                 <h3 className="mt-3 font-display text-3xl text-ink transition-colors duration-300 group-hover:text-rose-gold">
-                  Five collections of AI photography
+                  {COLLECTION_COUNT} collections of AI photography
                 </h3>
                 <p className="mt-3 flex-1 text-[0.95rem] leading-relaxed text-muted">
                   Portraits, interface concepts and cinematic scenes — browsable one considered
@@ -317,10 +317,19 @@ const HOME_SLIDES: HomeSlide[] = PHOTOS.map((photo) => ({
   alt: photo.alt,
   caption: photo.alt,
   eyebrow: COLLECTIONS.find((collection) =>
-    collection.photos.some((item) => item.index === photo.index),
+    collection.photos.some((item) => item.key === photo.slug),
   )?.title,
   slug: photo.slug,
-}))
+})).concat(
+  // the story stills belong in the slider as well — they are part of the work
+  STORY_STILLS.map((still) => ({
+    src: still.src,
+    alt: still.alt,
+    caption: still.alt,
+    eyebrow: 'The Palace Letters',
+    slug: still.slug,
+  })),
+)
 
 function HomeSlider() {
   return (
@@ -468,7 +477,7 @@ function CreatorIntro() {
               <div className="mt-9 flex flex-wrap items-center gap-5">
                 <Link to="/about" className="btn btn-dark">
                   Meet the Creator
-                  <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
+                  <ArrowRight className="ico-arrow-right h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
                 </Link>
                 <p className="font-script text-3xl leading-none text-rose-gold">Farhana Farid</p>
               </div>

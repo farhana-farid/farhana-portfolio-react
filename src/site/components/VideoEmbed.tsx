@@ -55,7 +55,7 @@ export default function VideoEmbed({ title, className = '' }: VideoEmbedProps) {
             />
 
             <span className="relative z-10 flex flex-col items-center gap-5 px-6">
-              <span className="relative grid h-20 w-20 place-items-center rounded-full border border-champagne/70 bg-paper/10 backdrop-blur-sm transition-transform duration-500 group-hover:scale-110">
+              <span className="ico-play-badge relative grid h-20 w-20 place-items-center rounded-full border border-champagne/70 bg-paper/10 backdrop-blur-sm transition-transform duration-500 group-hover:scale-110">
                 <Play
                   className="ml-1 h-7 w-7 text-paper"
                   strokeWidth={1.4}
@@ -81,7 +81,7 @@ export default function VideoEmbed({ title, className = '' }: VideoEmbedProps) {
           className="btn btn-primary"
         >
           Watch on YouTube
-          <ExternalLink className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
+          <ExternalLink className="ico-external h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
         </a>
         <p className="max-w-md text-sm leading-relaxed text-muted">
           <span className="font-display text-base italic text-ink">{title}</span> — a cinematic

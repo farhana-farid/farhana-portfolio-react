@@ -328,7 +328,7 @@ export default function About() {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <Link to="/ai-photo" className="btn btn-primary">
               View My Work
-              <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
+              <ArrowRight className="ico-arrow-right h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
             </Link>
             <Link to="/ai-video" className="btn btn-ghost">
               Watch My Videos

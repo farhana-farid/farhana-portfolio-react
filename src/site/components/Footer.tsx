@@ -82,7 +82,7 @@ export default function Footer() {
               className="btn btn-ghost mt-8 self-start !px-5 !py-3 !text-[0.66rem]"
             >
               Back to top
-              <ArrowUp className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
+              <ArrowUp className="ico-arrow-up h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
             </button>
           </div>
         </div>

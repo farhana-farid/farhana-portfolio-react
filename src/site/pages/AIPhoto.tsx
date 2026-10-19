@@ -5,7 +5,7 @@ import PageHeader from '../components/PageHeader'
 import Reveal from '../components/Reveal'
 import SmartImage from '../components/SmartImage'
 import Carousel, { type CarouselSlide } from '../components/Carousel'
-import { COLLECTIONS, PHOTO_COUNT, TOTAL_SLOTS, UNIQUE_SLOTS } from '../data/photos'
+import { COLLECTIONS, TOTAL_SLOTS, UNIQUE_SLOTS } from '../data/photos'
 import { PAGE_META } from '../data/site'
 
 interface GallerySlide extends CarouselSlide {
@@ -66,7 +66,7 @@ function GalleryCarousel({
 
           <Reveal delay={290}>
             <p className="mt-6 hidden items-center gap-2.5 text-[0.6rem] font-medium uppercase tracking-[0.24em] text-rose-deep lg:flex">
-              <Images className="h-3.5 w-3.5" strokeWidth={1.5} aria-hidden="true" />
+              <Images className="ico-tilt h-3.5 w-3.5" strokeWidth={1.5} aria-hidden="true" />
               Drag, swipe or use the arrows
             </p>
           </Reveal>
@@ -130,9 +130,9 @@ export default function AIPhoto() {
   }))
 
   const checks = [
-    `${PHOTO_COUNT} photographs`,
-    `${collections.length} carousels`,
-    '4 images each',
+    `${TOTAL_SLOTS} images`,
+    `${collections.length} collections`,
+    `${UNIQUE_SLOTS} unique`,
     'no repeats',
   ]
 
@@ -148,7 +148,7 @@ export default function AIPhoto() {
             <span className="block italic text-rose-gold">rendered in light</span>
           </>
         }
-        lead="Twenty AI-generated images — portraits, interface concepts and cinematic scenes — arranged into five collections of four. Every photograph appears in exactly one carousel."
+        lead="AI-generated imagery across portraits, interface concepts and cinematic scenes — arranged into collections where every image appears in exactly one carousel. The first five gather early interface and product studies; the last two tell a single story, The Palace Letters."
         meta={checks}
       />
 
@@ -169,9 +169,9 @@ export default function AIPhoto() {
             <p className="eyebrow">Collection integrity</p>
             <p className="mx-auto mt-3 max-w-2xl text-[0.95rem] leading-relaxed text-muted">
               <span className="font-display text-lg italic text-ink">
-                {TOTAL_SLOTS} carousel slots, {UNIQUE_SLOTS} unique photographs.
+                {TOTAL_SLOTS} carousel slots, {UNIQUE_SLOTS} unique images.
               </span>{' '}
-              Five groups of four, built from the twenty originals with nothing repeated between
+              {collections.length} collections in total, and nothing appears in more than one of
               them.
             </p>
           </div>
@@ -202,7 +202,7 @@ export default function AIPhoto() {
           <Reveal delay={220}>
             <Link to="/ai-video" className="btn btn-primary mt-8">
               Visit AI Video
-              <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
+              <ArrowRight className="ico-arrow-right h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
             </Link>
           </Reveal>
         </div>

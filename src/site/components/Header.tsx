@@ -120,7 +120,7 @@ export default function Header() {
               className="btn btn-primary hidden !px-6 !py-3 !text-[0.68rem] xl:inline-flex"
             >
               Explore My Work
-              <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
+              <ArrowUpRight className="ico-external h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
             </Link>
           </nav>
 
@@ -137,7 +137,7 @@ export default function Header() {
             {open ? (
               <X className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
             ) : (
-              <Menu className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
+              <Menu className="ico-menu h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
             )}
           </button>
         </div>
@@ -210,7 +210,7 @@ export default function Header() {
 
           <Link to="/ai-photo" className="btn btn-primary mt-6 w-full">
             Explore My Work
-            <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
+            <ArrowUpRight className="ico-external h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
           </Link>
         </div>
       </div>

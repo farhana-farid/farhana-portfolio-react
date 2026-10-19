@@ -23,6 +23,13 @@ const discovered = import.meta.glob('../../assets/videos/*.mp4', {
   import: 'default',
 }) as Record<string, string>
 
+/**
+ * The Palace Letters films are a connected story and are presented in their own
+ * dedicated section, so they are filtered out of this one-off list to avoid
+ * showing the same clip twice on the page.
+ */
+const isStoryFilm = (path: string) => /story-\d+-/.test(path.split('/').pop() ?? '')
+
 const DETAILS: { match: RegExp; title: string; description: string; tag: string }[] = [
   {
     match: /cat_and_mouse_kitchen/i,
@@ -45,6 +52,7 @@ const DETAILS: { match: RegExp; title: string; description: string; tag: string 
 ]
 
 export const VIDEOS: VideoProject[] = Object.entries(discovered)
+  .filter(([path]) => !isStoryFilm(path))
   .sort(([a], [b]) => a.localeCompare(b))
   .map(([path, src]) => {
     const name = path.split('/').pop() ?? ''

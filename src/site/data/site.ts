@@ -38,12 +38,12 @@ export const PAGE_META: Record<string, PageMeta> = {
   '/ai-video': {
     title: 'AI Video Creations — Farhana Farid',
     description:
-      'Cinematic stories and creative experiments brought to life through AI and visual storytelling by Farhana Farid.',
+      'Cinematic stories and creative experiments brought to life through AI and visual storytelling by Farhana Farid, including the ten-chapter series The Palace Letters.',
   },
   '/ai-photo': {
     title: 'AI Photo Gallery — Farhana Farid',
     description:
-      'A curated collection of twenty AI-generated portraits, cinematic visuals and imaginative digital art by Farhana Farid.',
+      'A curated collection of AI-generated portraits, cinematic visuals and imaginative digital art by Farhana Farid, including the two-part stills series The Palace Letters.',
   },
   '/about': {
     title: 'About the Creator — Farhana Farid',
