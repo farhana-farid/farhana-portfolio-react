@@ -2,12 +2,79 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Farhana Farid — AI Enthusiast &amp; Web Developer</title>
+    <meta name="theme-color" content="#FFFCFA" />
+
+    <title>Farhana Farid — Website Designer, Developer &amp; AI Creator</title>
+    <meta
+      name="description"
+      content="The creative portfolio of Farhana Farid — website designer, developer, AI enthusiast and AI content creator. Explore AI video creations and a curated gallery of AI-generated imagery."
+    />
+    <meta name="author" content="Farhana Farid" />
+    <meta name="color-scheme" content="light" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Farhana Farid" />
+    <meta property="og:title" content="Farhana Farid — Website Designer, Developer &amp; AI Creator" />
+    <meta
+      property="og:description"
+      content="Turning imagination into digital experiences — website design, AI-powered imagery and cinematic storytelling."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Farhana Farid — Website Designer, Developer &amp; AI Creator" />
+    <meta
+      name="twitter:description"
+      content="Turning imagination into digital experiences — website design, AI-powered imagery and cinematic storytelling."
+    />
+
+    <link rel="icon" type="image/png" href="/favicon-ff-32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/favicon-ff-16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="/favicon-ff-64.png" sizes="64x64" />
+    <link rel="apple-touch-icon" href="/favicon-ff-180.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&family=Parisienne&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--
+      Route normalisation: must run BEFORE the asset tags below are parsed so that
+      a deep link such as /ai-video/ resolves its relative asset URLs against the
+      app base instead of its own directory. See src/site/basePath.ts
+    -->
+    <script>
+      (function () {
+        try {
+          var p = window.location.pathname;
+          if (p.length > 1 && p.charAt(p.length - 1) === '/') {
+            var stripped = p.replace(/\/+$/, '');
+            if (stripped !== '') {
+              var last = stripped.split('/').pop();
+              var known = ['ai-video', 'ai-photo', 'about'];
+              if (window.__SPA_FALLBACK__ === true || known.indexOf(last) !== -1) {
+                window.history.replaceState(
+                  null,
+                  '',
+                  stripped + window.location.search + window.location.hash
+                );
+              }
+            }
+          }
+        } catch (e) {
+          /* no-op: never block page load */
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <noscript>
+      <p style="font-family: Georgia, serif; padding: 2rem; text-align: center">
+        Farhana Farid — AI Creator Portfolio. Please enable JavaScript to view this site.
+      </p>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

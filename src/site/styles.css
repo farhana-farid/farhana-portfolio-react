@@ -1,0 +1,335 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   FARHANA FARID — design tokens
+   Modern luxury · elegant editorial · feminine · cinematic
+------------------------------------------------------------------ */
+
+@theme {
+  /* palette */
+  --color-paper: #fffcfa; /* warm white  */
+  --color-ivory: #fff8f3; /* soft ivory   */
+  --color-peach: #f8d8ce; /* peach pink   */
+  --color-blush: #f3c5cb; /* blush pink   */
+  --color-rose-gold: #b76e79; /* rose gold    */
+  /* Same hue, deeper value: used wherever the rose carries *text*, so small
+     labels and button copy stay above the 4.5:1 contrast threshold. */
+  --color-rose-deep: #a25966;
+  --color-champagne: #d8b77a; /* champagne    */
+  --color-ink: #30272b; /* primary text */
+  --color-muted: #75676b; /* secondary    */
+
+  /* typography */
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: "Jost", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-script: "Parisienne", "Segoe Script", "Bradley Hand", cursive;
+
+  /* soft, layered elevation */
+  --shadow-silk: 0 1px 2px rgba(48, 39, 43, 0.04), 0 8px 24px -12px rgba(48, 39, 43, 0.14);
+  --shadow-lift: 0 2px 4px rgba(48, 39, 43, 0.05), 0 20px 44px -20px rgba(48, 39, 43, 0.22);
+  --shadow-glow: 0 24px 60px -28px rgba(183, 110, 121, 0.45);
+}
+
+/* ------------------------------------------------------------------
+   Base
+------------------------------------------------------------------ */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--color-peach);
+    color: var(--color-ink);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  img {
+    display: block;
+  }
+
+  /* consistent, visible keyboard focus everywhere */
+  :focus-visible {
+    outline: 2px solid var(--color-rose-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-ivory);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #e4cfc6;
+    border: 3px solid var(--color-ivory);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-rose-gold);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Reusable editorial primitives
+------------------------------------------------------------------ */
+
+@layer components {
+  /* tracked, uppercase eyebrow label */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--color-rose-deep);
+  }
+
+  /* thin decorative rule with a gold centre */
+  .rule-diamond {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  .rule-diamond::before,
+  .rule-diamond::after {
+    content: "";
+    height: 1px;
+    width: 44px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--color-champagne) 85%, transparent),
+      transparent
+    );
+  }
+
+  /* fine champagne hairline used as a section divider */
+  .hairline {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--color-champagne) 55%, transparent),
+      transparent
+    );
+  }
+
+  /* pill button — primary (rose gold) */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.95rem 1.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    line-height: 1;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.35s ease,
+      background-color 0.35s ease,
+      color 0.35s ease,
+      border-color 0.35s ease;
+  }
+
+  .btn-primary {
+    background-color: var(--color-rose-deep);
+    color: #fffcfa;
+    box-shadow: 0 14px 30px -16px rgba(183, 110, 121, 0.85);
+  }
+  .btn-primary:hover {
+    background-color: #8d4b57;
+    transform: translateY(-2px);
+    box-shadow: 0 20px 34px -16px rgba(183, 110, 121, 0.9);
+  }
+
+  .btn-ghost {
+    background-color: transparent;
+    color: var(--color-ink);
+    border-color: color-mix(in srgb, var(--color-champagne) 70%, transparent);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-rose-gold);
+    color: var(--color-rose-deep);
+    background-color: color-mix(in srgb, var(--color-peach) 40%, transparent);
+    transform: translateY(-2px);
+  }
+
+  .btn-dark {
+    background-color: var(--color-ink);
+    color: var(--color-ivory);
+  }
+  .btn-dark:hover {
+    background-color: var(--color-rose-deep);
+    transform: translateY(-2px);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+  }
+
+  /* circular carousel control */
+  .ctl {
+    display: inline-grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 999px;
+    background-color: color-mix(in srgb, var(--color-paper) 88%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-champagne) 60%, transparent);
+    color: var(--color-ink);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease,
+      border-color 0.3s ease,
+      transform 0.3s ease;
+  }
+  .ctl:hover {
+    background-color: var(--color-rose-deep);
+    border-color: var(--color-rose-deep);
+    color: var(--color-paper);
+    transform: scale(1.06);
+  }
+
+  /* framed image plate with a champagne hairline */
+  .plate {
+    position: relative;
+    background-color: var(--color-ivory);
+    border: 1px solid color-mix(in srgb, var(--color-champagne) 55%, transparent);
+    box-shadow: var(--shadow-lift);
+    overflow: hidden;
+  }
+
+  .card-soft {
+    background-color: var(--color-paper);
+    border: 1px solid color-mix(in srgb, var(--color-champagne) 42%, transparent);
+    box-shadow: var(--shadow-silk);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Motion — always respect the user's reduced-motion preference
+------------------------------------------------------------------ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.carousel-track {
+  transition: transform 0.75s cubic-bezier(0.65, 0.02, 0.22, 1);
+  will-change: transform;
+}
+
+.shimmer {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-ivory) 20%,
+    color-mix(in srgb, var(--color-peach) 55%, var(--color-ivory)) 42%,
+    var(--color-ivory) 64%
+  );
+  background-size: 220% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+@keyframes shimmer {
+  0% {
+    background-position: 140% 0;
+  }
+  100% {
+    background-position: -60% 0;
+  }
+}
+
+@keyframes autoplay-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.autoplay-progress {
+  animation-name: autoplay-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.animate-float-soft {
+  animation: float-soft 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
